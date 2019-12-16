@@ -1,0 +1,24 @@
+@require: stdja
+@require: itemize
+
+@import: ./include/local
+@import: ./include/source
+
+document (|
+  title = {画像映像情報処理\fil-both;レポート課題};
+  author = {};
+  date = {2019/12/16};
+  show-title = true;
+  show-toc = false;
+|) '<
+  +section{演習課題1} <
+  >
+  +section{参考文献} <
+    +listing {
+      * MacにOpenCV4をインストールする(C++)
+      \url(`https://qiita.com/HoriThe3rd/items/2829463cd5bfe5cba03f`);
+      * CMakeの使い方（その１）
+      \url(`https://qiita.com/shohirose/items/45fb49c6b429e8b204ac`);
+    }
+  >
+>

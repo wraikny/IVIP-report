@@ -1,0 +1,97 @@
+@require: stdja
+@require: decoset
+@require: vdecoset
+@require: code
+
+let-block ctx +centering it =
+  line-break true true ctx (inline-fil ++ read-inline ctx it ++ inline-fil)
+
+
+let name-context ctx =
+  ctx |> set-dominant-narrow-script Latin
+      |> set-font Latin (`lmmono`, 1., 0.)
+      |> set-text-color Color.red
+
+
+let-inline ctx \meta m =
+  let ctx-meta =
+    ctx |> set-text-color Color.orange
+        |> set-font Latin StdJa.font-latin-italic
+  in
+    embed-math ctx-meta m
+
+
+let-inline ctx \code inner =
+  let pads-code = (1.5pt, 1.5pt, 1.5pt, 1.5pt) in
+  let decoset-code = DecoSet.rectangle-round-fill 4pt 2pt (Color.gray 0.9) in
+  let ctx-code =
+    name-context ctx |> set-math-command (command \meta)
+  in
+  let ib-frame =
+    inline-frame-breakable pads-code decoset-code
+      (read-inline ctx-code inner)
+  in
+    script-guard Latin ib-frame
+
+
+let-block ctx +code-box code =
+  read-block
+    (ctx |> set-font-size 8pt) 
+    '<+code(code);>
+
+
+let-block ctx +frame content =
+  let pads = (10pt, 10pt, 10pt, 10pt) in
+  let decoset = VDecoSet.simple-frame-stroke 1pt (Color.gray 0.75) in
+    block-frame-breakable ctx pads decoset (fun ctx -> read-block ctx content)
+
+
+let-inline ctx \insert-image w path =
+  let img = load-image path in
+    use-image-by-width img w
+
+
+let-inline ctx \insert-pdf w path no =
+  let img = load-pdf-image path no in
+    use-image-by-width img w
+
+
+let-block ctx +image-frame content =
+  let pads = (10pt, 10pt, 10pt, 10pt) in
+  let decoset = VDecoSet.simple-frame-stroke 1pt (Color.gray 0.75) in
+    block-frame-breakable ctx pads decoset (fun ctx -> read-block ctx '<+centering{#content;}>)
+
+let-inline ctx \tabular lstf =
+  let pads = (5pt, 5pt, 2pt, 2pt) in
+  let cellf it = NormalCell(pads, inline-fil ++ (read-inline ctx it) ++ inline-fil) in
+  let multif nr nc it = MultiCell(nr, nc, pads, inline-fil ++ (read-inline ctx it) ++ inline-fil) in
+  let empty = EmptyCell in
+    tabular (lstf cellf multif empty) (fun xs ys -> (
+        match (xs, List.reverse xs) with
+        | (xF :: _, xL :: _) ->
+            ( match (ys, List.reverse ys) with
+              | (yF :: _, yL :: _) ->
+                  xs |> List.map (fun x -> start-path (x, yF) |> line-to (x, yL) |> terminate-path)
+                    |> List.map (stroke 1pt (RGB(0., 0., 0.)))
+
+              | _ -> []
+            )
+
+        | _ -> []
+      ))
+
+
+let-inline ctx \url inner =
+  let ctx-url =
+    let blue = Color.rgb (38. /. 255.) (29. /. 255.) (163. /. 255.) in
+    ctx |> set-dominant-narrow-script Latin
+        |> set-text-color blue
+        |> set-font Latin (`ipaexm`, .8, 0.)
+  in
+  let deco _ _ _ _ = [] in
+  inline-frame-breakable (1.4pt, 1.4pt, 1.4pt, 1.4pt)
+    (deco, deco, deco, deco)
+    (read-inline ctx-url (embed-string inner))
+
+% let force-break ctx =
+%   discretionary 0 (inline-skip (get-text-width ctx *' 2.) inline-fil inline-nil

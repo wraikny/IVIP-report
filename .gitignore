@@ -1,0 +1,10 @@
+.vscode
+.ionide
+
+report/**/source.satyh
+
+/build/**
+
+**.satysfi-aux
+report/build/**
+!report/build/.gitkeep
