@@ -1,32 +1,38 @@
-#include <stdio.h>
-#include <opencv2/opencv.hpp>
-// using namespace cv; // 名前空間の設定
+#include <iostream>
+#include <unordered_map>
 
-int main(void)
+namespace ivip
 {
-    cv::Mat img, gray;
-    img = cv::imread("images/sample512.png", cv::IMREAD_COLOR); // 画像ファイルの読み込み
-    if (img.empty())
+
+int sample();
+int report1();
+
+static const std::unordered_map<std::string, std::function<int(void)>> modeList = {
+    {"sample", sample},
+    {"rep1", report1}};
+
+int main(int argc, char *argv[])
+{
+    if(argc > 0)
     {
-        printf("Unable to load the image");
-        return 1;
-    }
-
-    cvtColor(img, gray, cv::COLOR_BGR2GRAY); // グレイスケールに変換
-
-    cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE); // ウィンドウ生成
-    imshow("Display Image", gray);                 // 画像表示
-
-    // キー待ち状態に移行
-    while (1)
-    {
-        int c = cv::waitKey(10); // 引数はdelay
-        switch ((char)c)
+        auto mode = std::string(argv[1]);
+        try
         {
-        case 'q': // qキーでプログラム終了
-            return 0;
+            auto f = modeList.at(mode);
+            return f();
+        }
+        catch (std::out_of_range e)
+        {
+            std::cout << "Unexpected argument" << std::endl;
         }
     }
+    else
+    {
+        std::cout << "Set argument" << std::endl;
+    }
+    
 
     return 0;
+}
+
 }
