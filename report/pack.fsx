@@ -10,10 +10,15 @@ let exts = ["cpp"; "hpp"]
 let target = @"./include/source.satyh"
 
 let reformPath (path : string) =
-  (Path.GetFileNameWithoutExtension path).Replace("_", "-")
+  let filename = Path.GetFileNameWithoutExtension path
+  let extension = Path.GetExtension path
+
+  (sprintf "%s%s" filename extension)
+    .Replace(".", "-")
+    .Replace("_", "-")
 
 Directory.EnumerateFiles(dir)
-|> Seq.filter(fun s -> exts |> Seq.exists(s.EndsWith))
+|> Seq.filter(fun s -> exts |> Seq.exists s.EndsWith)
 |> Seq.map(fun path ->
   sprintf """
 let code-%s = '<+code-box(```
