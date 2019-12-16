@@ -17,8 +17,30 @@ document (|
     +listing {
       * MacにOpenCV4をインストールする(C++)
       \url(`https://qiita.com/HoriThe3rd/items/2829463cd5bfe5cba03f`);
+      
       * CMakeの使い方（その１）
       \url(`https://qiita.com/shohirose/items/45fb49c6b429e8b204ac`);
+      
+      * コマンドライン引数
+      \url(`http://www.ritsumei.ac.jp/~mmr14135/johoWeb/cmnds.html`);
+      
+      * 【C++】charをstring型に変換する方法（値 配列 ポインタ → 文字列）
+      \url(`https://marycore.jp/prog/cpp/convert-char-to-string/`);
+      
+      * 連想配列 std::unordered_map\<\> を使用する
+      \url(`http://program.station.ez-net.jp/special/handbook/cpp/stl/map.asp`);
+      
+      * 例外処理
+      \url(`http://wisdom.sakura.ne.jp/programming/cpp/cpp35.html`);
+      
+      * std::function
+      \url(`https://ja.cppreference.com/w/cpp/utility/functional/function`);
+      
+      * C++ 文字列クラス std::string 入門
+      \url(`http://vivi.dyndns.org/tech/cpp/string.html#comp`);
+
+      * [C++17]構造化束縛について調べてみた
+      \url(`https://qiita.com/prozolic/items/6527289aab97fbf970d8`);
     }
   >
 >
