@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 
 file(GLOB my_src ./src/*.cpp)
 
-set(CMAKE_CXX_FLAGS "-std=c++0x -O3")
+set(CMAKE_CXX_FLAGS "-std=c++17 -O3")
 
 project(ivip CXX)
 

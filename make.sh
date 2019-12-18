@@ -8,7 +8,7 @@ print_usage() {
     echo '    init: Initialize with CMake'
     echo '    build: Build target'
     echo '    run [-f]: Execute target'
-    echo '    clear: Clear build directory'
+    echo '    clean: Clean build directory'
     echo '    report: Make report pdf'
 }
 
@@ -46,13 +46,15 @@ elif [ $1 = "run" ]; then
 
     echo "$0 run"
 
-    if [ $# -gt 1 -a $2 = "-f" ]; then
-        ./build/ivip ${@:2:($#-2)}
-    else
-        ./build/ivip $@
+    if [ $# -gt 1 ]; then
+        if [ $2 = "-f" ]; then
+            ./build/ivip ${@:3:($#-2)}
+        else
+            ./build/ivip ${@:2:($#-1)}
+        fi
     fi
 
-elif [ $1 = "clear" ]; then
+elif [ $1 = "clean" ]; then
     rm -r build
 
 elif [ $1 = "report" ]; then
