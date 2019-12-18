@@ -7,12 +7,54 @@
 document (|
   title = {画像映像情報処理\fil-both;レポート課題};
   author = {};
-  date = {2019/12/16};
+  date = {2019/12/19};
   show-title = true;
   show-toc = false;
 |) '<
-  +section{演習課題1} <
+  +section{前提} <
+    +p {
+      以下では共通のコードとして、以下の\code{common.cpp}を用いる。
+    }
+
+    #code-common-cpp;
+
+    +p {
+      また、以下の\code{main.cpp}から書く演習課題を実装した関数を呼び出す。
+    }
+    
+    #code-main-cpp;
   >
+  +section{演習課題1} <
+    +p {
+      以下のコードで実装した。適宜コメントを記載している。
+    }
+
+    #code-rep1-cpp;
+
+    +p {
+      以下は、1枚目が閾値を調整したもの(\code{threshold = 112})で、2枚目が判別分析法(大津の方法)で自動的に2値化したものである。
+    }
+
+    +image-frame {
+      \insert-image(7cm)(`../images/lamp-binary-user-112.jpg`);
+      \insert-image(7cm)(`../images/lamp-binary-otsu.jpg`);
+    }
+
+    +p {
+      文字の輪郭など細かい部分に着目すると、判別分析法を用いたものの方がくっきりとしている。
+      判別分析法によって求められた閾値は妥当な値であるように見える。
+    }
+
+    +p {
+      元画像
+    }
+
+    +image-frame {
+      \insert-image(7cm)(`../images/lamp.jpg`);
+    }
+
+  >
+
   +section{参考文献} <
     +listing {
       * MacにOpenCV4をインストールする(C++)
@@ -41,6 +83,18 @@ document (|
 
       * [C++17]構造化束縛について調べてみた
       \url(`https://qiita.com/prozolic/items/6527289aab97fbf970d8`);
+
+      * main in namespace
+      \url(`https://stackoverflow.com/questions/3956678/main-in-namespace`);
+      
+      * throw 式
+      \url(`https://ja.cppreference.com/w/cpp/language/throw`);
+      
+      * ラムダ 式
+      \url(`https://cpprefjp.github.io/lang/cpp11/lambda_expressions.html`);
+      
+      * cv::createTrackbar
+      \url(`http://opencv.jp/opencv-2.1/cpp/user_interface.html`);
     }
   >
 >

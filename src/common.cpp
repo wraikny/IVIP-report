@@ -15,4 +15,15 @@ void wait_key(char key)
         }
     }
 }
+
+cv::Mat read_image(std::string path, cv::ImreadModes mode)
+{
+    auto img = cv::imread(path, cv::IMREAD_COLOR);
+    if (img.empty())
+    {
+        throw ("Unable to load the image: " + path);
+    }
+    return img;
+}
+
 }

@@ -3,7 +3,11 @@
 namespace ivip
 {
 
+void callLambda(int x, void *userContext);
+
 void wait_key(char key);
+
+cv::Mat read_image(std::string path, cv::ImreadModes mode);
 
 }
 #endif

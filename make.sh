@@ -58,6 +58,7 @@ elif [ $1 = "clean" ]; then
     rm -r build
 
 elif [ $1 = "report" ]; then
+    mogrify -format jpg images/*.png
     cd report
     make
 

@@ -4,12 +4,16 @@
 namespace ivip
 {
 
-int sample();
-int report1();
+namespace sample { int sample(); }
+namespace rep1 { int report1(); }
+namespace rep2 { int report2(); }
 
 static const std::unordered_map<std::string, std::function<int(void)>> modeDict = {
-    {"sample", sample},
-    {"rep1", report1}};
+    {"sample", sample::sample},
+    {"rep1", rep1::report1},
+    {"rep2", rep2::report2}
+};
+
 }
 
 int main(int argc, char *argv[])
@@ -17,7 +21,6 @@ int main(int argc, char *argv[])
     if (argc > 0)
     {
         auto mode = std::string(argv[1]);
-        std::cout << "Arg:" << mode << std::endl;
         try
         {
             auto f = ivip::modeDict.at(mode);
@@ -25,9 +28,14 @@ int main(int argc, char *argv[])
         }
         catch (std::out_of_range e)
         {
-            std::cerr << "Unexpected argument" << std::endl;
+            std::cerr << "Unexpected argument: " << mode << std::endl;
             return -1;
         }
+        // catch (std::exception e)
+        // {
+        //     std::cerr << "Unexpected Exception:" << e.what() << std::endl;
+        //     return -1;
+        // }
     }
     else
     {

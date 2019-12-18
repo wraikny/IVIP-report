@@ -1,22 +1,16 @@
 #include <opencv2/opencv.hpp>
 #include "common.hpp"
 
-namespace ivip
+namespace ivip::sample
 {
 
 int sample()
 {
-    cv::Mat img, gray;
-
     // 画像ファイルの読み込み
-    img = cv::imread("images/sample512.png", cv::IMREAD_COLOR);
-    if (img.empty())
-    {
-        printf("Unable to load the image");
-        return 1;
-    }
+    auto img = read_image("images/sample512.png", cv::IMREAD_COLOR);
 
     // グレイスケールに変換
+    cv::Mat gray;
     cvtColor(img, gray, cv::COLOR_BGR2GRAY);
 
     // ウィンドウ生成
